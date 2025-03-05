@@ -29,7 +29,9 @@ const Header = () => {
           >
             Déconnexion
           </button>
-          {admin && <button onClick={() => navigate("/admin")}>Admin</button>}
+          {admin === true && (
+            <button onClick={() => navigate("/admin")}>Admin</button>
+          )}
         </div>
       )}
     </div>
