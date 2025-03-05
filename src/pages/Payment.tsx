@@ -1,6 +1,7 @@
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { useStore } from "../store";
 import axios, { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface ApiResponse {
   message: string;
@@ -25,6 +26,9 @@ interface Order {
 const Payment = () => {
   const total = useStore((state) => state.totalPrice);
   const cart = useStore((state) => state.cart);
+  const reset = useStore((state) => state.resetCart);
+
+  const navigate = useNavigate();
 
   const addOrder = async (_prevState: OrderState, formdata: FormData) => {
     try {
@@ -45,6 +49,7 @@ const Payment = () => {
           },
         },
       );
+      reset();
       return { error: null, success: true };
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -71,15 +76,51 @@ const Payment = () => {
     },
   );
 
+  useEffect(() => {
+    if (state.success) {
+      setTimeout(() => {
+        navigate("/products");
+      }, 5000);
+    }
+  }, [state.success, navigate]);
+
   return (
-    <main>
-      <h1>Page Paiement</h1>
-      <p>Montant total {total.toFixed(2)} €</p>
-      <form action={formAction}>
-        <input type="text" placeholder="Adresse" name="address" required />
-        <button disabled={isPending}>Commander</button>
-        {state.error && <p>{state.error}</p>}
-        {state.success && <p>La commande est validée !</p>}
+    <main className="mx-auto max-w-4xl px-4 py-12">
+      <h1 className="mb-6 text-3xl font-semibold text-gray-800">
+        Page Paiement
+      </h1>
+      <p className="mb-6 text-xl font-semibold text-gray-800">
+        Montant total : {total.toFixed(2)} €
+      </p>
+
+      <form action={formAction} className="space-y-4">
+        <div>
+          <input
+            type="text"
+            placeholder="Adresse de livraison"
+            name="address"
+            required
+            className="w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-green-500 focus:outline-none"
+          />
+        </div>
+
+        <div className="text-center">
+          <button
+            type="submit"
+            disabled={isPending}
+            className={`w-full rounded-lg py-3 font-semibold text-white ${isPending ? "bg-gray-400" : "bg-green-600 hover:bg-green-700"} focus:outline-none`}
+          >
+            {isPending ? "Traitement en cours..." : "Commander"}
+          </button>
+        </div>
+        {state.error && (
+          <p className="text-center text-red-600">{state.error}</p>
+        )}
+        {state.success && (
+          <p className="text-center text-green-600">
+            La commande est validée ! Vous allez être redirigé !
+          </p>
+        )}
       </form>
     </main>
   );

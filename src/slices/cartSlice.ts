@@ -11,6 +11,7 @@ export interface CartState {
   increaseQuantity: (product: CartItem) => void;
   decreaseQuantity: (id: string) => void;
   removeFromCart: (id: string) => void;
+  resetCart: () => void;
 }
 
 export const cartSlice = (
@@ -57,6 +58,12 @@ export const cartSlice = (
         (acc, item) => acc + item.price * item.quantity,
         0,
       );
+    });
+  },
+  resetCart: () => {
+    set((state) => {
+      state.cart = [];
+      state.totalPrice = 0;
     });
   },
 });

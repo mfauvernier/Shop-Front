@@ -9,7 +9,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const login = useStore((state) => state.login);
-
   const navigate = useNavigate();
 
   const userMutation = useMutation({
@@ -36,31 +35,57 @@ const Login = () => {
   };
 
   return (
-    <main>
-      <p className="m-4 mt-12 text-center text-2xl">Se connecter</p>
-      <form onSubmit={handleSubmit} className="flex flex-col">
-        <input
-          type="email"
-          placeholder="Entrez votre email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="mx-10 my-4 border-1 p-3"
-        />
-        <input
-          type="password"
-          placeholder="Entrez votre mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="mx-10 my-4 border-1 p-3"
-        />
-        <button className="mx-10 mt-10 rounded-xl border-1 p-3">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 py-12">
+      <p className="mb-8 text-3xl font-semibold text-gray-800">Se connecter</p>
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md space-y-6 rounded-lg bg-white p-8 shadow-lg"
+      >
+        <div className="flex flex-col">
+          <label
+            htmlFor="email"
+            className="mb-2 text-lg font-medium text-gray-700"
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Entrez votre email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="rounded-lg border-2 border-gray-300 p-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label
+            htmlFor="password"
+            className="mb-2 text-lg font-medium text-gray-700"
+          >
+            Mot de passe
+          </label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Entrez votre mot de passe"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="rounded-lg border-2 border-gray-300 p-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full rounded-lg bg-blue-500 py-3 font-semibold text-white transition-colors hover:bg-blue-600"
+        >
           Se connecter
         </button>
       </form>
-      <div className="mt-15 text-center">
-        <p>Vous avez déjà un compte ? </p>
+      <div className="mt-6 text-center">
+        <p className="text-gray-600">Vous n'avez pas encore de compte ?</p>
         <Link to="/users/signup">
-          <p>Connectez-vous ici !</p>
+          <p className="text-blue-500 hover:text-blue-600">
+            Inscrivez-vous ici !
+          </p>
         </Link>
       </div>
     </main>

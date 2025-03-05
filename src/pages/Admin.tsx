@@ -49,37 +49,61 @@ const Admin = () => {
   });
 
   return (
-    <main>
-      <h1>Page Admin</h1>
-      {error && <p>{error.message}</p>}
+    <main className="mx-auto max-w-4xl px-4 py-12">
+      <h1 className="mb-8 text-3xl font-semibold text-gray-800">Commandes</h1>
+      {error && (
+        <p className="mb-6 text-center text-red-600">{error.message}</p>
+      )}
       {isLoading ? (
-        <p>Chargement ...</p>
+        <p className="text-center text-gray-500">Chargement...</p>
       ) : (
-        data?.map((order) => {
-          return (
-            <div key={order._id}>
-              <p>Commande n°{order._id}</p>
-              <p>Nom : {order.owner.username}</p>
-              <p>Adresse de livraison : {order.address}</p>
-              <p>{order.price} €</p>
-              {!order.delivered ? (
-                <p>Commande en attente de validation</p>
-              ) : (
-                <p>Commande livrée</p>
-              )}
+        <div className="space-y-6">
+          {data?.map((order) => (
+            <div
+              key={order._id}
+              className="rounded-lg border p-6 shadow-md transition-shadow duration-200 hover:shadow-lg"
+            >
+              <p className="text-lg font-semibold">Commande n°{order._id}</p>
+              <p className="text-gray-700">Nom : {order.owner.username}</p>
+              <p className="text-gray-700">
+                Adresse de livraison : {order.address}
+              </p>
+              <p className="text-gray-700">Montant : {order.price} €</p>
+              <p
+                className={`font-semibold ${
+                  order.delivered ? "text-green-600" : "text-yellow-600"
+                }`}
+              >
+                {order.delivered
+                  ? "Commande livrée"
+                  : "Commande en attente de validation"}
+              </p>
+
               {!order.delivered ? (
                 <button
                   onClick={() => orderMutation.mutate(order._id)}
                   disabled={orderMutation.isPending}
+                  className={`mt-4 w-full rounded-lg py-2 font-semibold text-white ${
+                    orderMutation.isPending
+                      ? "bg-gray-400"
+                      : "bg-green-600 hover:bg-green-700"
+                  } focus:outline-none`}
                 >
-                  Marquer comme livrée
+                  {orderMutation.isPending
+                    ? "Traitement..."
+                    : "Marquer comme livrée"}
                 </button>
               ) : (
-                <button disabled>Commande livrée</button>
+                <button
+                  disabled
+                  className="mt-4 w-full cursor-not-allowed rounded-lg bg-gray-400 py-2 font-semibold text-white"
+                >
+                  Commande livrée
+                </button>
               )}
             </div>
-          );
-        })
+          ))}
+        </div>
       )}
     </main>
   );
