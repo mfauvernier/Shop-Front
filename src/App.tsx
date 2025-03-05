@@ -21,6 +21,7 @@ function App() {
           "https://site--shop-test--m7by8jdn4xzv.code.run/create-db",
         );
         console.log("Base de données initialisée");
+        localStorage.removeItem("token");
       } catch (error) {
         console.log("Erreur lors de l'initialisation", error);
       }
