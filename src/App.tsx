@@ -10,8 +10,24 @@ import Payment from "./pages/Payment";
 import Admin from "./pages/Admin";
 import Product from "./pages/Product";
 import RequireAuth from "./components/RequireAuth";
+import { useEffect } from "react";
+import axios from "axios";
 
 function App() {
+  useEffect(() => {
+    const createDB = async () => {
+      try {
+        await axios.post(
+          "https://site--shop-test--m7by8jdn4xzv.code.run/create-db",
+        );
+        console.log("Base de données initialisée");
+      } catch (error) {
+        console.log("Erreur lors de l'initialisation", error);
+      }
+    };
+    createDB();
+  }, []);
+
   return (
     <>
       <Router>
