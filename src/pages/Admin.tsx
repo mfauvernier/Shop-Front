@@ -16,12 +16,15 @@ const Admin = () => {
   const { data, isLoading, error } = useQuery<Order[]>({
     queryKey: ["orders", token],
     queryFn: async () => {
-      const { data } = await axios.get("http://localhost:4000/orders", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+      const { data } = await axios.get(
+        "https://site--shop-test--m7by8jdn4xzv.code.run/orders",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
       return data;
     },
     staleTime: 1000 * 60 * 1,
@@ -30,7 +33,7 @@ const Admin = () => {
   const orderMutation = useMutation({
     mutationFn: async (orderId: string) => {
       await axios.put(
-        `http://localhost:4000/orders/mark-delivered/${orderId}`,
+        `https://site--shop-test--m7by8jdn4xzv.code.run/${orderId}`,
         {},
         {
           headers: {

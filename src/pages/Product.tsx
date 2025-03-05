@@ -35,7 +35,9 @@ const Product = () => {
   const { data, isLoading, error } = useQuery<Product>({
     queryKey: ["product", id],
     queryFn: async () => {
-      const { data } = await axios.get(`http://localhost:4000/products/${id}`);
+      const { data } = await axios.get(
+        `https://site--shop-test--m7by8jdn4xzv.code.run/${id}`,
+      );
       return data;
     },
     staleTime: 1000 * 60 * 3,

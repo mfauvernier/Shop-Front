@@ -20,8 +20,8 @@ const Signup = () => {
       password: string;
     }) => {
       const response = await axios.post(
-        "http://localhost:4000/user/signup",
-        userData
+        "https://site--shop-test--m7by8jdn4xzv.code.run/signup",
+        userData,
       );
       return response.data;
     },

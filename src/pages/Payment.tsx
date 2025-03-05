@@ -35,12 +35,16 @@ const Payment = () => {
       }));
       const order: Order = { products, address, price: total };
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:4000/orders", order, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+      await axios.post(
+        "https://site--shop-test--m7by8jdn4xzv.code.run/orders",
+        order,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
       return { error: null, success: true };
     } catch (error) {
       if (axios.isAxiosError(error)) {
