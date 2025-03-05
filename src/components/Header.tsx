@@ -9,30 +9,51 @@ const Header = () => {
   const admin = useStore((state) => state.admin);
 
   return (
-    <div>
-      <button onClick={() => navigate("/")}>Home</button>
+    <div className="flex justify-between p-8">
+      <button onClick={() => navigate("/")} className="text-xl">
+        Accueil
+      </button>
       {!token ? (
-        <div>
-          <button onClick={() => navigate("/users/login")}>Se connecter</button>
-          <button onClick={() => navigate("/users/signup")}>S'inscrire</button>
+        <div className="flex justify-between gap-3">
+          <button onClick={() => navigate("/users/login")} className="text-xl">
+            Se connecter
+          </button>
+          <button onClick={() => navigate("/users/signup")} className="text-xl">
+            S'inscrire
+          </button>
         </div>
       ) : (
-        <div>
-          <button onClick={() => navigate("/products")}>Page Produit</button>
-          <button onClick={() => navigate("/cart")}>
-            {total.toFixed(2)} €
-          </button>
+        <div className="flex flex-col gap-1">
+          <div className="flex justify-between gap-4">
+            <button
+              onClick={() => navigate("/products")}
+              className="rounded-2xl border-2 p-2 text-xl"
+            >
+              Produits
+            </button>
+            <button
+              onClick={() => navigate("/cart")}
+              className="rounded-2xl border-2 p-2 text-xl"
+            >
+              {total.toFixed(2)} €
+            </button>
+          </div>
           <button
             onClick={() => {
               logout();
               navigate("/");
             }}
+            className="rounded-2xl border-2 p-2 text-xl"
           >
             Déconnexion
           </button>
-          {admin === true && (
-            <button onClick={() => navigate("/admin")}>Admin</button>
-          )}
+          <div>
+            {admin === true && (
+              <button onClick={() => navigate("/admin")} className="text-xl">
+                Consulter les commandes
+              </button>
+            )}
+          </div>
         </div>
       )}
     </div>

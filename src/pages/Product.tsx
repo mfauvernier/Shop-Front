@@ -36,7 +36,7 @@ const Product = () => {
     queryKey: ["product", id],
     queryFn: async () => {
       const { data } = await axios.get(
-        `https://site--shop-test--m7by8jdn4xzv.code.run/${id}`,
+        `https://site--shop-test--m7by8jdn4xzv.code.run/products/${id}`,
       );
       return data;
     },
