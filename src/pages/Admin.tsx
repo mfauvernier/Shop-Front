@@ -33,7 +33,7 @@ const Admin = () => {
   const orderMutation = useMutation({
     mutationFn: async (orderId: string) => {
       await axios.put(
-        `https://site--shop-test--m7by8jdn4xzv.code.run/${orderId}`,
+        `https://site--shop-test--m7by8jdn4xzv.code.run/orders/mark-delivered/${orderId}`,
         {},
         {
           headers: {

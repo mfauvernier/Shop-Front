@@ -15,12 +15,13 @@ const Header = () => {
         <div>
           <button onClick={() => navigate("/users/login")}>Se connecter</button>
           <button onClick={() => navigate("/users/signup")}>S'inscrire</button>
-          <button onClick={() => navigate("/cart")}>{total.toFixed(2)}</button>
         </div>
       ) : (
         <div>
           <button onClick={() => navigate("/products")}>Page Produit</button>
-          <button onClick={() => navigate("/cart")}>{total.toFixed(2)}</button>
+          <button onClick={() => navigate("/cart")}>
+            {total.toFixed(2)} €
+          </button>
           <button
             onClick={() => {
               logout();
