@@ -26,7 +26,7 @@ const Payment = () => {
   const total = useStore((state) => state.totalPrice);
   const cart = useStore((state) => state.cart);
 
-  const addOrder = async (_state: OrderState, formdata: FormData) => {
+  const addOrder = async (_prevState: OrderState, formdata: FormData) => {
     try {
       const address = formdata.get("address") as string;
       const products = cart.map((item) => ({
@@ -55,13 +55,17 @@ const Payment = () => {
             };
         }
       }
+      return { success: false, error: "Erreur inconue" };
     }
   };
 
-  const [state, formAction, isPending] = useActionState<OrderState>(addOrder, {
-    error: null,
-    success: false,
-  });
+  const [state, formAction, isPending] = useActionState<OrderState, FormData>(
+    addOrder,
+    {
+      error: null,
+      success: false,
+    },
+  );
 
   return (
     <main>
